@@ -1,13 +1,14 @@
+-- Parameters are prefixed with 'p_' to indicate they are parameters.
 -- Function to insert company and its stock data.
+-- Will return nothing, $$ is the delimiter for the function body in PostgreSQL.
 CREATE OR REPLACE FUNCTION insert_company_and_stock_data(
-    -- Parameters are prefixed with 'p_' to indicate they are parameters.
     p_ticker_symbol VARCHAR(10),
     p_company_name VARCHAR(100),
     p_sector VARCHAR(50) DEFAULT NULL,
     p_founded_year INTEGER DEFAULT NULL,
     p_headquarters VARCHAR(100) DEFAULT NULL,
-    p_file_path TEXT -- Path to the CSV file
-) RETURNS VOID AS $$ -- Will return nothing, $$ is the delimiter for the function body in PostgreSQL.
+    p_file_path TEXT DEFAULT 'null' -- Path to the CSV file
+) RETURNS VOID AS $$ 
 
 -- DECLARE block is used for storing local variables within the function. 
 DECLARE
@@ -84,6 +85,7 @@ BEGIN
     RAISE NOTICE 'Successfully inserted company % (%) and its stock data.',
         p_company_name, p_ticker_symbol;
 END;
--- $$ is the delimiter for the function body.
--- LANGUAGE plpgsql; -- Specifies that this function uses the PL/pgSQL procedural language
 $$ LANGUAGE plpgsql;
+-- $$ is the delimiter for the function body.
+-- LANGUAGE plpgsql; 
+-- Specifies that this function uses the PL/pgSQL procedural language
